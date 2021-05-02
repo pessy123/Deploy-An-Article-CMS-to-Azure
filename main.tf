@@ -30,9 +30,9 @@ resource "azurerm_resource_group" "resource-group" {
 
 resource "azurerm_sql_server" "server" {
   administrator_login = "udacity"
-  administrator_login_password = "udacity1234"
+  administrator_login_password = "Project-2021*"
   location = var.location
-  name = "server"
+  name = "server-udacity-pr-1"
   resource_group_name = azurerm_resource_group.resource-group.name
   version = "12.0"
 
@@ -54,7 +54,7 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
   account_tier = "Standard"
   location = var.location
-  name = "storage"
+  name = "storageudacity2021"
 
   resource_group_name = azurerm_resource_group.resource-group.name
 
@@ -66,6 +66,10 @@ resource "azurerm_function_app" "my-function" {
   location = var.location
   name = "udacity-function"
   resource_group_name = azurerm_resource_group.resource-group.name
+  storage_account_name = azurerm_storage_account.storage.name
+  storage_account_access_key = azurerm_storage_account.storage.primary_access_key
+
+  tags = var.tags
 }
 
 resource "azurerm_app_service_plan" "service-plan" {
@@ -77,4 +81,5 @@ resource "azurerm_app_service_plan" "service-plan" {
     tier = "Standard"
     size = "S1"
   }
+  tags = var.tags
 }
