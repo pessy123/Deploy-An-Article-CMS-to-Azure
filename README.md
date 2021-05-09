@@ -34,6 +34,7 @@ You are expected to do the following to complete this project:
 8. Log into the Azure Portal, go to your Resource Group, and provide a screenshot including all the resources that were created to complete this project. (see sample screenshot in "example_images" folder)
    ![Resource group](docs/resource-group.png "resource group")
 9. Take a screenshot of the Redirect URIs entered for your registered app, related to the MS Login button.
+   ![redirect URI](docs/redirect-URI.png "redirect uri")
 10. Take a screenshot of your logs (can be from the Log stream in Azure) showing logging from an attempt to sign in with an invalid login, as well as a valid login.
 
 ## example_images Folder
