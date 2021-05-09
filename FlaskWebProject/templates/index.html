@@ -21,7 +21,7 @@
                 <td>{{ post.title }}</td>
                 <td>{{ post.author }}</td>
                 <td>{{ post.image_path != None }}</td>
-                <td><a href="{{ url_for('post', id=post.post_id) }}">Edit Post</a></td>
+                <td><a href="{{ url_for('post', post_id=post.post_id) }}">Edit Post</a></td>
             </tr>
             {% endfor %}
         </table>
