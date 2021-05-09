@@ -54,16 +54,16 @@ def new_post():
     )
 
 
-@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+@app.route('/post/<int:id>', methods=['GET', 'POST'])
 @login_required
-def post(post_id):
-    post = Post.query.get(int(post_id))
+def post(id):
+    post = Post.query.get(int(id))
     form = PostForm(formdata=request.form, obj=post)
     if form.validate_on_submit():
         post.save_changes(form, request.files['image_path'], current_user.id)
         return redirect(url_for('home'))
 
-    app.logger.log(logging.INFO, "Entered post id:" + post_id)
+    app.logger.log(logging.INFO, "Entered post id:" + id)
 
     return render_template(
         'post.html',
