@@ -14,6 +14,8 @@ from FlaskWebProject.forms import LoginForm, PostForm
 from FlaskWebProject.models import User, Post
 from config import Config
 
+LOGIN_SUCCEEDED_ = "login succeeded "
+
 TOKEN_CACHE = "token_cache"
 
 imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] \
@@ -85,14 +87,17 @@ def login():
             app.logger.error("Invalid password")
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        app.logger.info("login succeeded " + user.username)
+        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
         login_user(user, remember=form.remember_me.data)
+        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
+        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
+    app.logger.info(LOGIN_SUCCEEDED_)
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
 
 
