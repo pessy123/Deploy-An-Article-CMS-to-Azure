@@ -54,7 +54,7 @@ def new_post():
     )
 
 
-@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def post(post_id):
     post = Post.query.get(int(post_id))
