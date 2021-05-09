@@ -77,12 +77,14 @@ def post(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    app.logger.log(logging.INFO, "Log in attempt")
+    app.logger.info("Login attempt")
     if current_user.is_authenticated:
+        app.logger.info("User is authenticated")
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
         if user is None or not user.check_password(form.password.data):
             app.logger.error("Invalid password")
             flash('Invalid username or password')
