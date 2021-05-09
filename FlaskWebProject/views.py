@@ -63,7 +63,7 @@ def post(id):
         post.save_changes(form, request.files['image_path'], current_user.id)
         return redirect(url_for('home'))
 
-    app.logger.log(logging.INFO, "Entered post id:" + id)
+    app.logger.log(logging.INFO, "Entered post id:" + str(id))
 
     return render_template(
         'post.html',
