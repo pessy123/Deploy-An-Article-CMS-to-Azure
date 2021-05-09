@@ -1,7 +1,7 @@
 """
 Routes and views for the flask application.
 """
-
+import logging
 import uuid
 
 import msal
@@ -27,6 +27,7 @@ imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] \
 def home():
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
+    app.logger.log(logging.INFO, "Entered home")
     return render_template(
         'index.html',
         title='Home Page',
@@ -42,6 +43,9 @@ def new_post():
         post = Post()
         post.save_changes(form, request.files['image_path'], current_user.id, new=True)
         return redirect(url_for('home'))
+
+    app.logger.log(logging.INFO, "New Post")
+
     return render_template(
         'post.html',
         title='Create Post',
@@ -50,14 +54,17 @@ def new_post():
     )
 
 
-@app.route('/post/<int:id>', methods=['GET', 'POST'])
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
 @login_required
-def post(id):
-    post = Post.query.get(int(id))
+def post(post_id):
+    post = Post.query.get(int(post_id))
     form = PostForm(formdata=request.form, obj=post)
     if form.validate_on_submit():
         post.save_changes(form, request.files['image_path'], current_user.id)
         return redirect(url_for('home'))
+
+    app.logger.log(logging.INFO, "Entered post id:" + post_id)
+
     return render_template(
         'post.html',
         title='Edit Post',
@@ -68,12 +75,14 @@ def post(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    app.logger.log(logging.INFO, "Log in attempt")
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
+            app.logger.log(logging.error("Invalid password"))
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
@@ -83,6 +92,7 @@ def login():
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
+    app.logger.info("login succeeded")
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
 
 
@@ -121,7 +131,7 @@ def logout():
         return redirect(
             Config.AUTHORITY + "/oauth2/v2.0/logout" +
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
-
+    app.logger.info("logout succeeded")
     return redirect(url_for('login'))
 
 
