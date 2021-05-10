@@ -77,29 +77,29 @@ def post(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    app.logger.info("Login attempt")
+    app.logger.warning("Login attempt")
     if current_user.is_authenticated:
-        app.logger.info("User is authenticated")
+        app.logger.warning("User is authenticated")
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
+        app.logger.warning(LOGIN_SUCCEEDED_ + user.username)
         if user is None or not user.check_password(form.password.data):
             app.logger.error("Invalid password")
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
+        app.logger.warning(LOGIN_SUCCEEDED_ + user.username)
         login_user(user, remember=form.remember_me.data)
-        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
+        app.logger.warning(LOGIN_SUCCEEDED_ + user.username)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
-        app.logger.info(LOGIN_SUCCEEDED_ + user.username)
+        app.logger.warning(LOGIN_SUCCEEDED_ + user.username)
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
-    app.logger.info(LOGIN_SUCCEEDED_)
+    app.logger.warning(LOGIN_SUCCEEDED_)
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
 
 
