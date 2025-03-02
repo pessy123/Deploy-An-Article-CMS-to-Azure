@@ -4,23 +4,23 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or '1c9bae92-ddc9-4aa1-b7a0-0bace1f26f64'
 
-    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'anyulstorage2021'
-    BLOB_STORAGE_KEY = os.environ.get('BLOB_STORAGE_KEY') or 'HsmcN51v91quYY988zWy985YggboYLVdRxbzrElg9VxycCgpNWKeUfiZmb73CnOvmEDqcfJh3oo++LsvEmzIYw=='
+    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'images1a'
+    BLOB_STORAGE_KEY = os.environ.get('BLOB_STORAGE_KEY') or 'JNtjGsaMJ7dhz5LvXkDAVt3Rlm/ypRWjRBmQqyPRDBTpJDpQSREUb9cZ0up9Mwz2cKWhfdFdEcfw+AStMzxCUw=='
     BLOB_CONTAINER = os.environ.get('BLOB_CONTAINER') or 'images'
 
-    SQL_SERVER = os.environ.get('SQL_SERVER') or 'project-one.database.windows.net'
-    SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'project-one'
-    SQL_USER_NAME = os.environ.get('SQL_USER_NAME') or 'udacity'
-    SQL_PASSWORD = os.environ.get('SQL_PASSWORD') or 'Temporal1'
+    SQL_SERVER = os.environ.get('SQL_SERVER') or 'cms.database.windows.net'
+    SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'cms (cms/cms)'
+    SQL_USER_NAME = os.environ.get('SQL_USER_NAME') or 'cmsadmin'
+    SQL_PASSWORD = os.environ.get('SQL_PASSWORD') or 'CMS4dmin'
     # Below URI may need some adjustments for driver version, based on your OS, if running locally
     SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://' + SQL_USER_NAME + '@' + SQL_SERVER + ':' + SQL_PASSWORD + '@' + SQL_SERVER + ':1433/' + SQL_DATABASE + '?driver=ODBC+Driver+17+for+SQL+Server'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     ### Info for MS Authentication ###
     ### As adapted from: https://github.com/Azure-Samples/ms-identity-python-webapp ###
-    CLIENT_SECRET = "Ew1yp3GyfWK6ZWL~l03ST_xZg-__3hXC_G"
+    CLIENT_SECRET = "mBZ8Q~MjnGWSl9jSfe7REqt6D1-_cKsh7czJwc2Q"
     # In your production app, Microsoft recommends you to use other ways to store your secret,
     # such as KeyVault, or environment variable as described in Flask's documentation here:
     # https://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
@@ -31,7 +31,7 @@ class Config(object):
     AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app, else put tenant name
     # AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
 
-    CLIENT_ID = "89ccf048-57c2-4e3b-8c6b-9c95347be8d3"
+    CLIENT_ID = "4457598c-67cb-481f-8703-fce87370b300"
 
     REDIRECT_PATH = "/getAToken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
 
